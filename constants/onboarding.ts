@@ -1,7 +1,7 @@
 export const OnboardingData: OnboardingProps[] = [
   {
     id: 1,
-    title: "No need for Waiting",
+    title: "No need for swaps",
     description:
       "With Suiver, your crypto moves as fast as you do, swap to cash instantly, no queues, no delays.",
     image: require("../assets/images/onboarding1.png"),
@@ -10,7 +10,7 @@ export const OnboardingData: OnboardingProps[] = [
     id: 2,
     title: "Receive crypto deposits",
     description:
-      "Turn your crypto into cash the moment it hits simple, direct, and stress-free.",
+      "Suiver allows you to receive your crypto allowing swift payments ",
     image: require("../assets/images/onboarding2.png"),
   },
 
@@ -18,14 +18,14 @@ export const OnboardingData: OnboardingProps[] = [
     id: 3,
     title: "Buy airtime & pay bills",
     description:
-      "Suiver allows you to Top up your phone or settle bills straight with your crypto quick, easy, and seamless.",
+      "Suiver allows you to top-up airtime and pay for bills ",
     image: require("../assets/images/onboarding3.png"),
   },
   {
     id: 4,
     title: "Send money to Family",
     description:
-      "Move money home in seconds, crypto to cash, direct and reliable for the people who matter most.",
+      "Suiver allows you to send money instantly to family and friends",
     image: require("../assets/images/onboarding4.png"),
   },
 ];
