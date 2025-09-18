@@ -12,16 +12,20 @@ import ProgressButton from "@/components/OnboardingButton";
 import FloatingBubble from "@/components/FloatingBubble";
 import { bubbleConfig } from "@/constants/BubbleConfig";
 import { OnboardingData } from "@/constants/onboarding";
+import { useRouter } from "expo-router";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const Welcome = () => {
   const [page, setPage] = useState(0);
   const fadeAnim = useRef(new Animated.Value(1)).current;
+  const router = useRouter()
 
   const handleNext = () => {
     if (page < OnboardingData.length - 1) {
       animateTransition(page + 1);
+    } else {
+      router.replace("/(auth)/welcomeScreen")
     }
   };
 

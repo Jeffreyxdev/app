@@ -26,7 +26,7 @@ const ProgressButton = ({ currentStep, totalSteps = 4, onPress }: Props) => {
     >
       <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         {Array.from({ length: totalSteps }).map((_, i) => {
-          const strokeColor = i < currentStep ? "#6C46B1" : "#e0e0e0";
+          const strokeColor = i < currentStep ? "#4A1F4A" : "#e0e0e0";
 
           return (
             <Circle
