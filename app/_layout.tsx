@@ -16,6 +16,13 @@ export default function RootLayout() {
     "Monsterrat-Medium": require("../assets/fonts/Montserrat-Medium.ttf"),
     "Monsterrat-Light": require("../assets/fonts/Montserrat-Light.ttf"),
     "Monsterrat-SemiBold": require("../assets/fonts/Montserrat-SemiBold.ttf"),
+    "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
+    "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
+    "Poppins-ExtraBold": require("../assets/fonts/Poppins-ExtraBold.ttf"),
+    "Poppins-ExtraLight": require("../assets/fonts/Poppins-ExtraLight.ttf"),
+    "Poppins-Light": require("../assets/fonts/Poppins-Light.ttf"),
+    "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
+    "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
   useEffect(() => {
@@ -24,7 +31,7 @@ export default function RootLayout() {
       setTimeout(() => {
         SplashScreen.hideAsync();
         console.log("First splash hidden");
-      }, 300); // Increase to 1 second
+      }, 300);
     }
   }, [loaded]);
 
@@ -40,7 +47,7 @@ export default function RootLayout() {
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(root)" options={{ headerShown: false }} />
       </Stack>
-      <StatusBar style="dark" />
+      <StatusBar style="auto" />
     </SafeAreaProvider>
   );
 }

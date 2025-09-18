@@ -11,7 +11,7 @@ const Index = () => {
   useEffect(() => {
     if (!showSplash) {
       console.log("Navigating to /welcome");
-      router.replace("/welcome");
+      router.replace("/onboarding");
     }
   }, [showSplash]);
 
