@@ -25,7 +25,7 @@ const Welcome = () => {
     if (page < OnboardingData.length - 1) {
       animateTransition(page + 1);
     } else {
-      router.replace("/(auth)/welcomeScreen")
+      router.replace("/(auth)")
     }
   };
 

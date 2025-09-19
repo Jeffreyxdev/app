@@ -9,20 +9,29 @@ import {
 } from "react-native";
 import Background from "@/components/GetStartedBackground";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SignUp from "../(auth)/sign-up";
-import SignIn from "../(auth)/sign-in";
+import SignUp from "./sign-up";
+import SignIn from "./sign-in";
+import { useSearchParams } from "expo-router/build/hooks";
 
 type FormType = "welcome" | "signup" | "signin";
 
-const WelcomeScreen = () => {
-  const [currentForm, setCurrentForm] = useState<FormType>("welcome");
+const Index = () => {
+  const params = useSearchParams() as { form?: string };
+  const initialForm: FormType = params?.form === "signin" ? "signin" : "welcome";
+  const [currentForm, setCurrentForm] = useState<FormType>(initialForm);
 
   const slideAnim = useRef(new Animated.Value(300)).current;
-
   const formSlideAnim = useRef(new Animated.Value(0)).current;
   const formOpacityAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    console.log("Initial params:", params);
+    // Check params on mount and switch if needed
+    if (params?.form === "signin" && currentForm !== "signin") {
+      switchForm("signin");
+    } else if (params?.form === "signup" && currentForm !== "signup") {
+      switchForm("signup");
+    }
     Animated.timing(slideAnim, {
       toValue: 0,
       duration: 500,
@@ -30,11 +39,23 @@ const WelcomeScreen = () => {
     }).start();
   }, []);
 
+  // Handle route parameter changes
+  useEffect(() => {
+    console.log("Params changed:", params);
+    if (params?.form === "signin" && currentForm !== "signin") {
+      switchForm("signin");
+    } else if (params?.form === "signup" && currentForm !== "signup") {
+      switchForm("signup");
+    }
+  }, [params?.form, currentForm]);
+
   const switchForm = (formType: FormType) => {
+    console.log("Switching to:", formType);
+    // Fade out & slide up
     Animated.parallel([
       Animated.timing(formSlideAnim, {
-        toValue: 100,
-        duration: 250,
+        toValue: -20, // slide slightly up
+        duration: 200,
         useNativeDriver: true,
       }),
       Animated.timing(formOpacityAnim, {
@@ -43,11 +64,15 @@ const WelcomeScreen = () => {
         useNativeDriver: true,
       }),
     ]).start(() => {
+      // Switch form after fade out
       setCurrentForm(formType);
+      console.log("Current form set to:", formType);
 
-      formSlideAnim.setValue(-100);
+      // Reset animation values for fade in
+      formSlideAnim.setValue(0); // Start from original position
       formOpacityAnim.setValue(0);
 
+      // Animate fade in & slide into place
       Animated.parallel([
         Animated.timing(formSlideAnim, {
           toValue: 0,
@@ -83,6 +108,7 @@ const WelcomeScreen = () => {
   );
 
   const renderAuthForm = () => {
+    console.log("Rendering form:", currentForm);
     const commonProps = {
       onBack: () => switchForm("welcome"),
       onSwitchForm: (formType: "signup" | "signin") => switchForm(formType),
@@ -100,10 +126,7 @@ const WelcomeScreen = () => {
 
   return (
     <Background>
-      <SafeAreaView className="flex-1">
-        <View className="flex-row justify-between items-center px-5 pt-5"></View>
-      </SafeAreaView>
-
+      <SafeAreaView className="flex-1" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="absolute left-0 bottom-0 w-full"
@@ -112,12 +135,10 @@ const WelcomeScreen = () => {
           className="bg-white rounded-t-[50px] w-full p-8"
           style={{
             transform: [{ translateY: slideAnim }],
-
             minHeight: currentForm === "welcome" ? 220 : 500,
           }}
         >
           <Animated.View
-            className="w-full"
             style={{
               transform: [{ translateY: formSlideAnim }],
               opacity: formOpacityAnim,
@@ -131,4 +152,4 @@ const WelcomeScreen = () => {
   );
 };
 
-export default WelcomeScreen;
+export default Index;

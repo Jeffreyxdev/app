@@ -8,6 +8,7 @@ import {
   Animated,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 interface SignUpProps {
   onBack: () => void;
@@ -17,6 +18,7 @@ interface SignUpProps {
 type SignUpStep = "account" | "login";
 
 const SignUp = ({ onBack, onSwitchForm }: SignUpProps) => {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState<SignUpStep>("account");
   const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -92,7 +94,12 @@ const SignUp = ({ onBack, onSwitchForm }: SignUpProps) => {
         ...loginForm,
       };
       console.log("Sign up with:", signupData);
-   
+
+      // Navigate to OTP verification page and pass email
+      router.push({
+        pathname: "/(auth)/verifyOtp",
+        params: { email: loginForm.email },
+      });
     }
   };
 
@@ -244,7 +251,6 @@ const SignUp = ({ onBack, onSwitchForm }: SignUpProps) => {
         </Text>
       </View>
 
-     
       <View className="flex-row mb-6">
         <View className="flex-1 h-1 bg-black rounded mr-2" />
         <View className="flex-1 h-1 bg-black rounded" />
@@ -326,7 +332,7 @@ const SignUp = ({ onBack, onSwitchForm }: SignUpProps) => {
 
       <TouchableOpacity
         className="bg-black py-4 rounded-full mb-4"
-        onPress={handleSignUp}
+        onPress={handleSignUp} // OTP verification flow
       >
         <Text className="text-white font-montserrat-semibold text-lg text-center">
           Create Account
