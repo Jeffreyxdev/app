@@ -17,7 +17,8 @@ type FormType = "welcome" | "signup" | "signin";
 
 const Index = () => {
   const params = useSearchParams() as { form?: string };
-  const initialForm: FormType = params?.form === "signin" ? "signin" : "welcome";
+  const initialForm: FormType =
+    params?.form === "signin" ? "signin" : "welcome";
   const [currentForm, setCurrentForm] = useState<FormType>(initialForm);
 
   const slideAnim = useRef(new Animated.Value(300)).current;
@@ -26,7 +27,7 @@ const Index = () => {
 
   useEffect(() => {
     console.log("Initial params:", params);
-    // Check params on mount and switch if needed
+
     if (params?.form === "signin" && currentForm !== "signin") {
       switchForm("signin");
     } else if (params?.form === "signup" && currentForm !== "signup") {
@@ -39,7 +40,6 @@ const Index = () => {
     }).start();
   }, []);
 
-  // Handle route parameter changes
   useEffect(() => {
     console.log("Params changed:", params);
     if (params?.form === "signin" && currentForm !== "signin") {
@@ -51,10 +51,10 @@ const Index = () => {
 
   const switchForm = (formType: FormType) => {
     console.log("Switching to:", formType);
-    // Fade out & slide up
+
     Animated.parallel([
       Animated.timing(formSlideAnim, {
-        toValue: -20, // slide slightly up
+        toValue: -20,
         duration: 200,
         useNativeDriver: true,
       }),
@@ -64,15 +64,12 @@ const Index = () => {
         useNativeDriver: true,
       }),
     ]).start(() => {
-      // Switch form after fade out
       setCurrentForm(formType);
       console.log("Current form set to:", formType);
 
-      // Reset animation values for fade in
-      formSlideAnim.setValue(0); // Start from original position
+      formSlideAnim.setValue(0);
       formOpacityAnim.setValue(0);
 
-      // Animate fade in & slide into place
       Animated.parallel([
         Animated.timing(formSlideAnim, {
           toValue: 0,
